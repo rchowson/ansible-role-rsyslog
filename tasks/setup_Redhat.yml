@@ -1,0 +1,14 @@
+---
+- name: upgrade rsyslog to version 
+  yum:
+    name: "{{ rsyslog_package_name|default('rsyslog') }}"
+    state: latest
+  tags: ['skip_ansible_lint']
+
+- name: ensure rsyslog-relp is installed
+  yum:
+    name: "{{ rsyslog_rule_remote_relp_pkg|default('rsyslog-relp') }}"
+    state: present
+  when:
+    - rsyslog_rule_remote is defined
+    - rsyslog_rule_remote_relp is defined
